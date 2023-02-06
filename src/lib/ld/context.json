@@ -1,0 +1,18 @@
+{
+  "@base": "https://vocab.voxmedia.com/",
+  "@vocab": "#",
+  "id": "@id",
+  "type": "@type",
+  "fsq_id": {
+    "@type": "@id"
+  },
+  "map": {
+    "@type": "@id"
+  },
+  "venue": {
+    "@type": "@id"
+  },
+  "point": {
+    "@type": "@id"
+  }
+}
