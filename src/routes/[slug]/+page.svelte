@@ -1,30 +1,39 @@
 <script type="text/javascript">
   import { createVenue, createPoint } from '$lib/createResource'
+  import PointCard from '$lib/components/PointCard.svelte'
   export let data
-  console.log(data)
+
+  $: {
+    console.log(`---`)
+    console.log(data.point)
+  }
 
   let editingTitle = false
 
   let term
   let searchResults
 
+  const refetchData = async () => {
+    let freshData = await fetch(window.location.href).then(r => r.json())
+    console.log(freshData)
+    data = freshData
+  }
+
   const placeSearch = (term) => async () => {
     searchResults = await fetch(`/api/autocomplete?query=${term}&radius=25000&latLng=45.512514553756034,-122.67504711758102`).then(r => r.json())
   }
 
   const addPlace = (result) => async () => {
-    console.log(result)
     let venue = result.id
     if (result.type) {
       console.log('this place is an acappella venue')
     } else {
-      console.log(`create a venue from this place`)
-      let venue = await createVenue(result)
+      venue = await createVenue(result)
     }
-    console.log('create map point')
-    console.log(`venue`, venue )
-    console.log(`map`, data.id )
+    let point = await createPoint({venue, map: data.id})
+    await refetchData()
     searchResults = null
+    return point
   }
 </script>
 
@@ -88,11 +97,14 @@
           <p>{#if result.type}✅ {/if}{result.name}</p>
           <p>{result.address}</p>
         </button>
-
       </li>
     {/each}
   </ol>
 {/if}
+
+{#each data.point as point}
+  <PointCard id={point} />
+{/each}
 
 <style type="text/css">
   label,

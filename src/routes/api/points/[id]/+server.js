@@ -3,15 +3,15 @@ import { queryJSON } from '$lib/ld/query'
 import get4SQ from '$lib/get4SQ.js'
 
 export async function GET({params}) {
-
+  let id = atob(params.id)
   let response = await queryJSON(`
     construct {
-      <${params.id}> ?pred ?obj .
-      <${params.id}> vox:fsq_id ?id .
+      <${id}> ?pred ?obj .
+      <${id}> vox:fsq_id ?id .
     }
     where {
-      <${params.id}> ?pred ?obj .
-      <${params.id}> vox:venue ?venue .
+      <${id}> ?pred ?obj .
+      <${id}> vox:venue ?venue .
       ?venue vox:fsq_id ?id .
 
     }`)
