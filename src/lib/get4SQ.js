@@ -1,6 +1,6 @@
 import { foursquare_api_key } from '$env/static/private'
 
-const get4SQ = async node => {
+const addFourSquareToVenue = async node => {
   let result = await fetch(`${node.fsq_id}?fields=link,geocodes,location,name,description,tel,website`, {
     headers: {
       'Accept': 'application/json',
@@ -19,4 +19,4 @@ const get4SQ = async node => {
   return Object.assign(venue, node)
 }
 
-export default get4SQ
+export default addFourSquareToVenue

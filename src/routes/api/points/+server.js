@@ -1,8 +1,8 @@
-import { json, error } from '@sveltejs/kit'
+import { json } from '@sveltejs/kit'
 import rdfkv from '$lib/ld/rdf-kv.js'
 import { update, queryJSON } from '$lib/ld/query.js'
 import arrayify from '$lib/arrayify.js'
-import get4SQ from '$lib/get4SQ.js'
+import { addFoursquareToVenue } from '$lib/places.js'
 
 export async function GET() {
   let response = await queryJSON(`
@@ -22,7 +22,7 @@ export async function GET() {
     }`)
 
   let arr = arrayify(response)
-  const points = await Promise.all(arr.map(get4SQ));
+  const points = await Promise.all(arr.map(addFoursquareToVenue));
 
   console.log(points)
 

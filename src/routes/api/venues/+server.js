@@ -1,4 +1,4 @@
-import { json, error } from '@sveltejs/kit'
+import { json } from '@sveltejs/kit'
 import rdfkv from '$lib/ld/rdf-kv.js'
 import { update, queryJSON } from '$lib/ld/query.js'
 import arrayify from '$lib/arrayify.js'
